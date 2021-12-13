@@ -2,6 +2,8 @@ class EnemyTank extends BaseTank {
 
     /** @type {PlayerTank} */
     player
+    /** @type {number} */
+    tankSpeed = 100
 
     constructor(scene, x, y, texture, frame, player){
         super(scene, x, y, texture, frame)
@@ -10,10 +12,11 @@ class EnemyTank extends BaseTank {
     }
 
     initMovement(){
-        this.scene.physics.velocityFromRotation(this.hull.rotation, this.tankSpeed,this.hull.body.rotation)
+        this.scene.physics.velocityFromRotation(this.hull.rotation, this.tankSpeed,this.hull.body.velocity)
     }
 
     update(time, delta){
         super.update()
+        this.turret.rotation = Phaser.Math.Angle.Between(this.hull.x, this.hull.y, this.player.hull.x, this.player.hull.y)
     }
 }
