@@ -55,10 +55,10 @@
 </data>
  </layer>
  <objectgroup id="3" name="objectLayer">
-  <object id="1" type="playerSpawn" x="190" y="322">
+  <object id="1" type="playerSpawn" x="193.982" y="321.965">
    <point/>
   </object>
-  <object id="2" type="enemySpawn" x="2368" y="314">
+  <object id="2" type="enemySpawn" x="394.018" y="493.98">
    <point/>
   </object>
  </objectgroup>
