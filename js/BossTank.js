@@ -1,0 +1,3 @@
+class BossTank extends BaseTank {
+    
+}

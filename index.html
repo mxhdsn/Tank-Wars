@@ -10,10 +10,12 @@
     <script src="js/BaseTank.js"></script>
     <script src="js/PlayerTank.js"></script>
     <script src="js/EnemyTank.js"></script>
+    <script src="js/BossTank.js"></script>
     <script src="js/TankScene.js"></script>
     <style type="text/css">
         body {
-            margin: 0;
+            margin: 40px;
+            background-color: black;
         }
     </style>
 </head>
@@ -24,10 +26,14 @@
             type: Phaser.AUTO,
             width: 800,
             height: 600,
+            backgroundColor: '#000000',
+            scale: {
+                autoCenter: Phaser.Scale.CENTER_BOTH
+            },
             physics: {
                 default: 'arcade',
                 arcade: {
-                    debug: true,
+                    debug: false,
                     gravity: {
                         y: 0
                     } // Top down game, so no gravity
