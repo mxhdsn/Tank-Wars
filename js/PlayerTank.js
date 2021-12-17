@@ -9,7 +9,7 @@ class PlayerTank extends BaseTank {
             'left': Phaser.Input.Keyboard.KeyCodes.A,
             'right': Phaser.Input.Keyboard.KeyCodes.D,
         })
-        this.damageMax = 10
+        this.damageMax = 5
         this.currentSpeed = 0
     }
 

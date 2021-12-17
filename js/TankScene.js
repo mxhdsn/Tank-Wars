@@ -9,7 +9,11 @@ class TankScene extends Phaser.Scene {
     /** @type {Array.<EnemyTank>} */
     enemyTanks = []
     /** @type {number} */
-    Lives = 10
+    lives = 5
+    /** @type {number} */
+    tankSpeed = 0
+    /** @type {number} */
+    tanksRemaining = 0
     /** @type {Phaser.Physics.Arcade.Group} */
     bullets
     /** @type {Phaser.Physics.Arcade.Group} */
@@ -46,42 +50,49 @@ class TankScene extends Phaser.Scene {
         border.setDepth(5)
         //-- Tank Health --//
         var tankHealthText = this.add.text( 30, 30, 'Lives: ', {
-            fontSize: '40px',
+            fontSize: '30px',
         })
         tankHealthText.setScrollFactor(0, 0)
         tankHealthText.setDepth(5)
         tankHealthText.setTint(0x39FF14)
-        this.life1 = this.add.image(195, 49, 'life')
+        this.life1 = this.add.image(155, 46, 'life')
         this.life1.setScrollFactor(0, 0)
         this.life1.setDepth(5)
-        this.life2 = this.add.image(245, 49, 'life')
+        this.life2 = this.add.image(195, 46, 'life')
         this.life2.setScrollFactor(0, 0)
         this.life2.setDepth(5)
-        this.life3 = this.add.image(295, 49, 'life')
+        this.life3 = this.add.image(235, 46, 'life')
         this.life3.setScrollFactor(0, 0)
         this.life3.setDepth(5)
-        this.life4 = this.add.image(345, 49, 'life')
+        this.life4 = this.add.image(275, 46, 'life')
         this.life4.setScrollFactor(0, 0)
         this.life4.setDepth(5)
-        this.life5 = this.add.image(395, 49, 'life')
+        this.life5 = this.add.image(315, 46, 'life')
         this.life5.setScrollFactor(0, 0)
         this.life5.setDepth(5)
         //-- Enemy Tanks Remaining --//
-        var tanksRemaining = this.add.text( 30, 80, 'Tanks Remaining: ', {
-            fontSize: '40px',
+        var tanksRemainingText = this.add.text( 30, 65, 'Tanks Remaining: ', {
+            fontSize: '30px',
         })
-        tanksRemaining.setScrollFactor(0, 0)
-        tanksRemaining.setDepth(5)
-        tanksRemaining.setTint(0x39FF14)
+        tanksRemainingText.setScrollFactor(0, 0)
+        tanksRemainingText.setDepth(5)
+        tanksRemainingText.setTint(0x39FF14)
         //-- Tank Fuel --//
+        var tankFuel = this.add.text(30, 540, 'Fuel: ', {
+            fontSize: '20px',
+        })
+        tankFuel.setScrollFactor(0, 0)
+        tankFuel.setDepth(5)
+        tankFuel.setTint(0x39FF14)
         //-- Tank Speed --//
-        var tankSpeedText = this.add.text(30, 570, 'Tank Speed = ', {
+        var tankSpeedText = this.add.text(30, 570, 'Tank Speed: ', {
             fontSize: '20px'
         })
         tankSpeedText.setScrollFactor(0, 0)
         tankSpeedText.setDepth(5)
         tankSpeedText.setTint(0x39FF14)
         //-- Radar Scanning --//
+
         //-- Create Bullets --//
         this.enemyBullets = this.physics.add.group({
             defaultKey: 'bullet',
