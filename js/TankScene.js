@@ -12,6 +12,10 @@ class TankScene extends Phaser.Scene {
     lives = 5
     /** @type {number} */
     tankSpeed = 0
+    /** @type {Phaser.GameObjects.Text} */
+    tanksRemainingText
+    /** @type {Phaser.Physics.Arcade.Group} */
+    enemyTank
     /** @type {number} */
     tanksRemaining = 0
     /** @type {Phaser.Physics.Arcade.Group} */
@@ -28,6 +32,8 @@ class TankScene extends Phaser.Scene {
         this.load.image('borderBox', 'assets/borderbox.png')
         this.load.image('reticle', 'assets/reticle.cur')
         this.load.image('life', 'assets/life.png')
+        this.load.image('tankRadar', 'assets/tank-radar.png')
+        this.load.spritesheet('tankFuel', 'assets/tanks/tank-fuel.png', {frameWidth: 200, frameHeight: 20})
         this.load.tilemapTiledJSON('level1', 'assets/level1.json')
     }
 
@@ -71,7 +77,7 @@ class TankScene extends Phaser.Scene {
         this.life5.setScrollFactor(0, 0)
         this.life5.setDepth(5)
         //-- Enemy Tanks Remaining --//
-        var tanksRemainingText = this.add.text( 30, 65, 'Tanks Remaining: ', {
+        var tanksRemainingText = this.add.text( 30, 65, 'Tanks Remaining:' + this.tanksRemaining, {
             fontSize: '30px',
         })
         tanksRemainingText.setScrollFactor(0, 0)
@@ -84,15 +90,20 @@ class TankScene extends Phaser.Scene {
         tankFuel.setScrollFactor(0, 0)
         tankFuel.setDepth(5)
         tankFuel.setTint(0x39FF14)
+        this.tankFuel = this.add.sprite(200, 550, 'tankFuel', 0)
+        this.tankFuel.setScrollFactor(0, 0)
+        this.tankFuel.setDepth(5)
         //-- Tank Speed --//
-        var tankSpeedText = this.add.text(30, 570, 'Tank Speed: ', {
+        var tankSpeedText = this.add.text(30, 570, 'Tank Speed:' + this.tankSpeed, {
             fontSize: '20px'
         })
         tankSpeedText.setScrollFactor(0, 0)
         tankSpeedText.setDepth(5)
         tankSpeedText.setTint(0x39FF14)
         //-- Radar Scanning --//
-
+        var tankRadar = this.add.image(700, 500, 'tankRadar')
+        tankRadar.setScrollFactor(0, 0)
+        tankRadar.setDepth(5)
         //-- Create Bullets --//
         this.enemyBullets = this.physics.add.group({
             defaultKey: 'bullet',
