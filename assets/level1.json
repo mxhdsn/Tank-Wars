@@ -1,12 +1,4 @@
 { "compressionlevel":-1,
- "editorsettings":
-    {
-     "export":
-        {
-         "format":"json",
-         "target":"level1.json"
-        }
-    },
  "height":10,
  "infinite":false,
  "layers":[
@@ -48,8 +40,8 @@
                  "type":"playerSpawn",
                  "visible":true,
                  "width":0,
-                 "x":193.981801637853,
-                 "y":321.96542311192
+                 "x":193.982,
+                 "y":321.965
                 }, 
                 {
                  "height":0,
@@ -60,8 +52,8 @@
                  "type":"enemySpawn",
                  "visible":true,
                  "width":0,
-                 "x":394.018198362147,
-                 "y":493.979981801638
+                 "x":394.018,
+                 "y":493.98
                 }, 
                 {
                  "height":0,
@@ -72,8 +64,8 @@
                  "type":"enemySpawn",
                  "visible":true,
                  "width":0,
-                 "x":294.018198362147,
-                 "y":129.979981801638
+                 "x":294.018,
+                 "y":129.98
                 }, 
                 {
                  "height":0,
@@ -84,8 +76,20 @@
                  "type":"enemySpawn",
                  "visible":true,
                  "width":0,
-                 "x":46.0181983621474,
-                 "y":389.979981801638
+                 "x":46.0182,
+                 "y":389.98
+                }, 
+                {
+                 "height":0,
+                 "id":6,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"bossSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":769.366895499619,
+                 "y":478.413424866514
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -94,10 +98,10 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":6,
+ "nextobjectid":7,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.4.3",
+ "tiledversion":"1.7.2",
  "tileheight":64,
  "tilesets":[
         {
@@ -152,6 +156,6 @@
         }],
  "tilewidth":64,
  "type":"map",
- "version":1.4,
+ "version":"1.6",
  "width":40
 }
