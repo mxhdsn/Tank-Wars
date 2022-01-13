@@ -79,6 +79,21 @@ class TankScene extends Phaser.Scene {
         this.life5 = this.add.image(315, 46, 'life')
         this.life5.setScrollFactor(0, 0)
         this.life5.setDepth(5)
+        this.life6 = this.add.image(355, 46, 'life')
+        this.life6.setScrollFactor(0, 0)
+        this.life6.setDepth(5)
+        this.life7 = this.add.image(395, 46, 'life')
+        this.life7.setScrollFactor(0, 0)
+        this.life7.setDepth(5)
+        this.life8 = this.add.image(435, 46, 'life')
+        this.life8.setScrollFactor(0, 0)
+        this.life8.setDepth(5)
+        this.life9 = this.add.image(475, 46, 'life')
+        this.life9.setScrollFactor(0, 0)
+        this.life9.setDepth(5)
+        this.life10 = this.add.image(515, 46, 'life')
+        this.life10.setScrollFactor(0, 0)
+        this.life10.setDepth(5)
         //-- Enemy Tanks Remaining --//
         var tanksRemainingText = this.add.text( 30, 65, 'Tanks Remaining:' + this.tanksRemaining, {
             fontSize: '30px',
@@ -86,6 +101,7 @@ class TankScene extends Phaser.Scene {
         tanksRemainingText.setScrollFactor(0, 0)
         tanksRemainingText.setDepth(5)
         tanksRemainingText.setTint(0x39FF14)
+        this.tanksRemaining = 4
         //-- Tank Fuel --//
         var tankFuel = this.add.text(30, 540, 'Fuel: ', {
             fontSize: '20px',
