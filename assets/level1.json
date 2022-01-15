@@ -98,6 +98,18 @@
                  "width":0,
                  "x":1879.13806254767,
                  "y":187.905415713196
+                }, 
+                {
+                 "height":0,
+                 "id":8,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"assassinSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":757.650648360031,
+                 "y":408.115942028986
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -106,7 +118,7 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":8,
+ "nextobjectid":9,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",

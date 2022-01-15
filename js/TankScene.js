@@ -22,6 +22,7 @@ class TankScene extends Phaser.Scene {
         this.load.image('bullet', 'assets/tanks/bullet.png')
         this.load.atlas('tank', 'assets/tanks/tanks.png', 'assets/tanks/tanks.json')
         this.load.atlas('enemy', 'assets/tanks/enemy-tanks.png', 'assets/tanks/tanks.json')
+        this.load.atlas('assassin', 'assets/tanks/assassin-tanks.png', 'assets/tanks/tanks.json')
         this.load.atlas('boss', 'assets/tanks/boss-tanks.png', 'assets/tanks/tanks.json')
         this.load.image('tileset', 'assets/tanks/landscape-tileset.png')
         this.load.tilemapTiledJSON('level1', 'assets/level1.json')
@@ -29,6 +30,7 @@ class TankScene extends Phaser.Scene {
         this.load.image('reticle', 'assets/reticle.cur')
         this.load.image('life', 'assets/life.png')
         this.load.image('tankRadar', 'assets/tank-radar.png')
+        this.load.image('fuelCan', 'assets/fuel-can.png')
         this.load.spritesheet('tankFuel', 'assets/tanks/tank-fuel.png',
             {
                 frameWidth: 200,
@@ -49,14 +51,17 @@ class TankScene extends Phaser.Scene {
         this.destructLayer.setCollisionByProperty({ collides: true })
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels)
         this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels)
+
         //-- User Interface Stuff --//
         //-- Reticle Conversion --//
         this.input.setDefaultCursor('url(assets/reticle_1.cur), pointer')
+
         //-- Create Border Box --//
         var border = this.add.image(0, 0, 'borderBox')
         border.setOrigin(0, 0)
         border.setScrollFactor(0, 0)
         border.setDepth(5)
+
         //-- Tank Health --//
         var tankHealthText = this.add.text( 30, 30, 'Lives: ', {
             fontSize: '30px',
@@ -94,6 +99,8 @@ class TankScene extends Phaser.Scene {
         this.life10 = this.add.image(515, 46, 'life')
         this.life10.setScrollFactor(0, 0)
         this.life10.setDepth(5)
+        
+
         //-- Enemy Tanks Remaining --//
         var tanksRemainingText = this.add.text( 30, 65, 'Tanks Remaining:' + this.tanksRemaining, {
             fontSize: '30px',
@@ -102,6 +109,7 @@ class TankScene extends Phaser.Scene {
         tanksRemainingText.setDepth(5)
         tanksRemainingText.setTint(0x39FF14)
         this.tanksRemaining = 4
+
         //-- Tank Fuel --//
         var tankFuel = this.add.text(30, 540, 'Fuel: ', {
             fontSize: '20px',
@@ -112,6 +120,7 @@ class TankScene extends Phaser.Scene {
         this.tankFuel = this.add.sprite(200, 550, 'tankFuel', 0)
         this.tankFuel.setScrollFactor(0, 0)
         this.tankFuel.setDepth(5)
+
         //-- Tank Speed --//
         var tankSpeedText = this.add.text(30, 570, 'Tank Speed:' + this.tankSpeed, {
             fontSize: '20px'
@@ -119,10 +128,12 @@ class TankScene extends Phaser.Scene {
         tankSpeedText.setScrollFactor(0, 0)
         tankSpeedText.setDepth(5)
         tankSpeedText.setTint(0x39FF14)
+
         //-- Radar Scanning --//
         var tankRadar = this.add.image(700, 500, 'tankRadar')
         tankRadar.setScrollFactor(0, 0)
         tankRadar.setDepth(5)
+
         // create bullets
         this.enemyBullets = this.physics.add.group({
             defaultKey: 'bullet',
@@ -141,7 +152,7 @@ class TankScene extends Phaser.Scene {
             actor = Utils.RetrieveCustomProperties(object)
             if (actor.type == "playerSpawn") {
                 this.createPlayer(actor)
-            } else if (actor.type == "enemySpawn" || actor.type == "bossSpawn") {
+            } else if (actor.type == "enemySpawn" || actor.type == "bossSpawn" || actor.type == 'assassinSpawn') {
                 enemyObjects.push(actor)
             }
         }, this)
@@ -149,6 +160,7 @@ class TankScene extends Phaser.Scene {
         for (let i = 0; i < enemyObjects.length; i++) {
             this.createEnemy(enemyObjects[i])
         }
+
         // create explosions
         this.explosions = this.add.group({
             defaultKey: 'kaboom',
@@ -168,18 +180,22 @@ class TankScene extends Phaser.Scene {
             this.disposeOfBullet(body.gameObject)
         }, this)
     }
+
     update(time, delta) {
         this.player.update()
         for (let i = 0; i < this.enemyTanks.length; i++) {
             this.enemyTanks[i].update(time, delta)
         }
     }
+
     createEnemy(dataObject) {
         let enemyTank
         if (dataObject.type == 'enemySpawn') {
             enemyTank = new EnemyTank(this, dataObject.x, dataObject.y, 'enemy', 'tank1', this.player)
         } else if (dataObject.type == 'bossSpawn') {
             enemyTank = new BossTank(this, dataObject.x, dataObject.y, 'boss', 'tank1', this.player)
+        } else if (dataObject.type == 'assassinSpawn') {
+            enemyTank = new AssassinTank(this, dataObject.x, dataObject.y, 'assassin', 'tank1', this.player)
         }
         enemyTank.initMovement()
         enemyTank.enableCollision(this.destructLayer)
@@ -192,10 +208,12 @@ class TankScene extends Phaser.Scene {
             }
         }
     }
+
     createPlayer(dataObject) {
         this.player = new PlayerTank(this, dataObject.x, dataObject.y, 'tank', 'tank1')
         this.player.enableCollision(this.destructLayer)
     }
+
     tryShoot(pointer) {
         /** @type {Phaser.Physics.Arcade.Sprite} */
         let bullet = this.bullets.get(this.player.turret.x, this.player.turret.y)
@@ -203,6 +221,7 @@ class TankScene extends Phaser.Scene {
             this.fireBullet(bullet, this.player.turret.rotation, this.enemyTanks)
         }
     }
+
     fireBullet(bullet, rotation, target) {
         // bullet is a sprite
         bullet.setDepth(3)
@@ -221,6 +240,7 @@ class TankScene extends Phaser.Scene {
         }
 
     }
+
     bulletHitPlayer(hull, bullet) {
         this.disposeOfBullet(bullet)
         this.player.damage()
@@ -235,6 +255,7 @@ class TankScene extends Phaser.Scene {
             }
         }
     }
+
     bulletHitEnemy(hull, bullet) {
         /** @type {EnemyTank} */
         let enemy
@@ -262,11 +283,13 @@ class TankScene extends Phaser.Scene {
             }
         }
     }
+
     activateExplosion(explosion) {
         explosion.setDepth(5)
         explosion.setActive(true)
         explosion.setVisible(true)
     }
+
     damageWall(bullet, tile) {
         this.disposeOfBullet(bullet)
         // retrieve the tileset firtgid (used as an offset)
@@ -280,9 +303,11 @@ class TankScene extends Phaser.Scene {
             newTile.setCollision(true)
         }
     }
+
     disposeOfBullet(bullet) {
         bullet.disableBody(true, true)
     }
+
     animComplete(animation, frame, gameObject) {
         this.explosions.killAndHide(gameObject)
     }

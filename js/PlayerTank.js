@@ -1,4 +1,5 @@
 class PlayerTank extends BaseTank{
+
     constructor(scene, x, y, texture, frame){
         super(scene, x, y, texture, frame)
         this.cursors = scene.input.keyboard.createCursorKeys()
@@ -11,6 +12,7 @@ class PlayerTank extends BaseTank{
         this.damageMax = 10
         this.currentSpeed = 0
     }
+
     update(){
         super.update()
         if(this.keys.w.isDown){
