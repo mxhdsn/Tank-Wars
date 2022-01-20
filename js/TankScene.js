@@ -63,77 +63,21 @@ class TankScene extends Phaser.Scene {
         border.setDepth(5)
 
         //-- Tank Health --//
-        var tankHealthText = this.add.text( 30, 30, 'Lives: ', {
-            fontSize: '30px',
-        })
-        tankHealthText.setScrollFactor(0, 0)
-        tankHealthText.setDepth(5)
-        tankHealthText.setTint(0x39FF14)
-        this.life1 = this.add.image(155, 46, 'life')
-        this.life1.setScrollFactor(0, 0)
-        this.life1.setDepth(5)
-        this.life2 = this.add.image(195, 46, 'life')
-        this.life2.setScrollFactor(0, 0)
-        this.life2.setDepth(5)
-        this.life3 = this.add.image(235, 46, 'life')
-        this.life3.setScrollFactor(0, 0)
-        this.life3.setDepth(5)
-        this.life4 = this.add.image(275, 46, 'life')
-        this.life4.setScrollFactor(0, 0)
-        this.life4.setDepth(5)
-        this.life5 = this.add.image(315, 46, 'life')
-        this.life5.setScrollFactor(0, 0)
-        this.life5.setDepth(5)
-        this.life6 = this.add.image(355, 46, 'life')
-        this.life6.setScrollFactor(0, 0)
-        this.life6.setDepth(5)
-        this.life7 = this.add.image(395, 46, 'life')
-        this.life7.setScrollFactor(0, 0)
-        this.life7.setDepth(5)
-        this.life8 = this.add.image(435, 46, 'life')
-        this.life8.setScrollFactor(0, 0)
-        this.life8.setDepth(5)
-        this.life9 = this.add.image(475, 46, 'life')
-        this.life9.setScrollFactor(0, 0)
-        this.life9.setDepth(5)
-        this.life10 = this.add.image(515, 46, 'life')
-        this.life10.setScrollFactor(0, 0)
-        this.life10.setDepth(5)
-        
+        this.tankHealthUI()      
 
         //-- Enemy Tanks Remaining --//
-        var tanksRemainingText = this.add.text( 30, 65, 'Tanks Remaining:' + this.tanksRemaining, {
-            fontSize: '30px',
-        })
-        tanksRemainingText.setScrollFactor(0, 0)
-        tanksRemainingText.setDepth(5)
-        tanksRemainingText.setTint(0x39FF14)
-        this.tanksRemaining = 4
+        this.tanksRemainingUI()
 
         //-- Tank Fuel --//
-        var tankFuel = this.add.text(30, 540, 'Fuel: ', {
-            fontSize: '20px',
-        })
-        tankFuel.setScrollFactor(0, 0)
-        tankFuel.setDepth(5)
-        tankFuel.setTint(0x39FF14)
-        this.tankFuel = this.add.sprite(200, 550, 'tankFuel', 0)
-        this.tankFuel.setScrollFactor(0, 0)
-        this.tankFuel.setDepth(5)
+        this.tankFuelUI()
 
         //-- Tank Speed --//
-        var tankSpeedText = this.add.text(30, 570, 'Tank Speed:' + this.tankSpeed, {
-            fontSize: '20px'
-        })
-        tankSpeedText.setScrollFactor(0, 0)
-        tankSpeedText.setDepth(5)
-        tankSpeedText.setTint(0x39FF14)
+        this.tankSpeedUI()
 
         //-- Radar Scanning --//
-        var tankRadar = this.add.image(700, 500, 'tankRadar')
-        tankRadar.setScrollFactor(0, 0)
-        tankRadar.setDepth(5)
+        this.tankRadarUI()
 
+        
         // create bullets
         this.enemyBullets = this.physics.add.group({
             defaultKey: 'bullet',
@@ -310,5 +254,50 @@ class TankScene extends Phaser.Scene {
 
     animComplete(animation, frame, gameObject) {
         this.explosions.killAndHide(gameObject)
+    }
+
+    tankHealthUI(player){
+        var tankHealthText = this.add.text( 30, 30, 'Lives: ', {
+            fontSize: '30px',
+        })
+        tankHealthText.setScrollFactor(0, 0)
+        tankHealthText.setDepth(5)
+        tankHealthText.setTint(0x39FF14) 
+    }
+
+    tanksRemainingUI(enemy) {
+        var tanksRemainingText = this.add.text( 30, 65, 'Tanks Remaining:', {
+            fontSize: '30px',
+        })
+        tanksRemainingText.setScrollFactor(0, 0)
+        tanksRemainingText.setDepth(5)
+        tanksRemainingText.setTint(0x39FF14)
+    }
+
+    tankFuelUI(player){
+        var tankFuel = this.add.text(30, 540, 'Fuel: ', {
+            fontSize: '20px',
+        })
+        tankFuel.setScrollFactor(0, 0)
+        tankFuel.setDepth(5)
+        tankFuel.setTint(0x39FF14)
+        this.tankFuel = this.add.sprite(200, 550, 'tankFuel', 0)
+        this.tankFuel.setScrollFactor(0, 0)
+        this.tankFuel.setDepth(5)
+    }
+
+    tankSpeedUI(player){
+        var tankSpeedText = this.add.text(30, 570, 'Tank Speed:' + this.tankSpeed, {
+            fontSize: '20px'
+        })
+        tankSpeedText.setScrollFactor(0, 0)
+        tankSpeedText.setDepth(5)
+        tankSpeedText.setTint(0x39FF14)
+    }
+    
+    tankRadarUI(){
+        var tankRadar = this.add.image(700, 500, 'tankRadar')
+        tankRadar.setScrollFactor(0, 0)
+        tankRadar.setDepth(5)
     }
 }
