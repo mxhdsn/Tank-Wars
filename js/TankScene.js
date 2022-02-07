@@ -77,6 +77,8 @@ class TankScene extends Phaser.Scene {
                 this.createPlayer(actor)
             } else if (actor.type == "enemySpawn" || actor.type == "bossSpawn" || actor.type == 'assassinSpawn') {
                 enemyObjects.push(actor)
+            } else if (actor.type == 'fuelSpawn') {
+                this.createFuelCan(actor)
             }
         }, this)
         this.cameras.main.startFollow(this.player.hull, true, 0.25, 0.25)
@@ -122,6 +124,7 @@ class TankScene extends Phaser.Scene {
 
         //-- Tank Fuel --//
         this.tankFuelUI()
+        this.physics.add.overlap(this.player.hull, this.fuel, this.fuelCollected, null, this)
 
         //-- Tank Speed --//
         this.tankSpeedUI()
@@ -339,15 +342,24 @@ class TankScene extends Phaser.Scene {
     }
 
     tankFuelUI(player) {
-        var tankFuel = this.add.text(30, 540, 'Fuel: ', {
+        this.tankFuel = this.add.text(30, 540, 'Fuel: ', {
             fontSize: '20px',
         })
-        tankFuel.setScrollFactor(0, 0)
-        tankFuel.setDepth(5)
-        tankFuel.setTint(0x39FF14)
-        this.tankFuel = this.add.sprite(200, 550, 'tankFuel', 0)
         this.tankFuel.setScrollFactor(0, 0)
         this.tankFuel.setDepth(5)
+        this.tankFuel.setTint(0x39FF14)
+        this.tankFuelSprite = this.add.sprite(200, 550, 'tankFuel', 0)
+        this.tankFuelSprite.setScrollFactor(0, 0)
+        this.tankFuelSprite.setDepth(5)
+    }
+
+    createFuelCan(dataObject) {
+        this.fuel = this.add.sprite(dataObject.x, dataObject.y, 'fuelCan')
+    }
+
+    fuelCollected(player, fuel) {
+        this.tankFuelAmount += 100
+        console.log(this.tankFuelAmount)
     }
 
     tankSpeedUI(player) {

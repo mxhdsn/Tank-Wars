@@ -110,6 +110,42 @@
                  "width":0,
                  "x":757.650648360031,
                  "y":408.115942028986
+                }, 
+                {
+                 "height":0,
+                 "id":9,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"fuelSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":207,
+                 "y":139
+                }, 
+                {
+                 "height":0,
+                 "id":10,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"fuelSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":2151,
+                 "y":486
+                }, 
+                {
+                 "height":0,
+                 "id":11,
+                 "name":"",
+                 "point":true,
+                 "rotation":0,
+                 "type":"fuelSpawn",
+                 "visible":true,
+                 "width":0,
+                 "x":1234,
+                 "y":214
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -118,10 +154,10 @@
          "y":0
         }],
  "nextlayerid":4,
- "nextobjectid":9,
+ "nextobjectid":12,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.7.2",
+ "tiledversion":"1.4.3",
  "tileheight":64,
  "tilesets":[
         {
@@ -176,6 +212,6 @@
         }],
  "tilewidth":64,
  "type":"map",
- "version":"1.6",
+ "version":1.4,
  "width":40
 }
