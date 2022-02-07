@@ -16,9 +16,11 @@ class TankScene extends Phaser.Scene {
     /** @type {number} */
     tankSpeed = 0
     /** @type {number} */
-    tanksRemaining = 0
+    tanksRemaining = 5
     /** @type {number} */
     playerHealth = 10
+    /** @type {number} */
+    tankFuelAmount = 100
 
     preload() {
         this.load.image('bullet', 'assets/tanks/bullet.png')
@@ -53,32 +55,7 @@ class TankScene extends Phaser.Scene {
         this.destructLayer.setCollisionByProperty({ collides: true })
         this.cameras.main.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels)
         this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels)
-
-        //-- User Interface Stuff --//
-        //-- Reticle Conversion --//
-        this.input.setDefaultCursor('url(assets/reticle_1.cur), pointer')
-
-        //-- Create Border Box --//
-        var border = this.add.image(0, 0, 'borderBox')
-        border.setOrigin(0, 0)
-        border.setScrollFactor(0, 0)
-        border.setDepth(5)
-
-        //-- Tank Health --//
-        this.tankHealthUI()
-
-        //-- Enemy Tanks Remaining --//
-        this.tanksRemainingUI()
-
-        //-- Tank Fuel --//
-        this.tankFuelUI()
-
-        //-- Tank Speed --//
-        this.tankSpeedUI()
-
-        //-- Radar Scanning --//
-        this.tankRadarUI()
-
+        
 
         // create bullets
         this.enemyBullets = this.physics.add.group({
@@ -125,6 +102,32 @@ class TankScene extends Phaser.Scene {
         this.physics.world.on('worldbounds', function (body) {
             this.disposeOfBullet(body.gameObject)
         }, this)
+
+        //-- User Interface Stuff --//
+        //-- Reticle Conversion --//
+        this.input.setDefaultCursor('url(assets/reticle_1.cur), pointer')
+
+        //-- Create Border Box --//
+        var border = this.add.image(0, 0, 'borderBox')
+        border.setOrigin(0, 0)
+        border.setScrollFactor(0, 0)
+        border.setDepth(5)
+
+        //-- Tank Health --//
+        this.tankHealthUI()
+
+        //-- Enemy Tanks Remaining --//
+        this.tanksRemaining = enemyObjects.length
+        this.tanksRemainingUI()
+
+        //-- Tank Fuel --//
+        this.tankFuelUI()
+
+        //-- Tank Speed --//
+        this.tankSpeedUI()
+
+        //-- Radar Scanning --//
+        this.tankRadarUI()
     }
 
     update(time, delta) {
@@ -226,6 +229,7 @@ class TankScene extends Phaser.Scene {
             this.input.enabled = false
             this.enemyTanks = []
             this.physics.pause()
+            this.gameOver()
             let explosion = this.explosions.get(hull.x, hull.y)
             if (explosion) {
                 this.activateExplosion(explosion)
@@ -258,6 +262,8 @@ class TankScene extends Phaser.Scene {
             if (enemy.isDestroyed()) {
                 // remove from array
                 this.enemyTanks.splice(index, 1)
+                this.tanksRemaining -= 1
+                this.updateTanksRemainingUI()
             }
         }
     }
@@ -320,12 +326,16 @@ class TankScene extends Phaser.Scene {
     }
 
     tanksRemainingUI(enemy) {
-        var tanksRemainingText = this.add.text(30, 65, 'Tanks Remaining:', {
+        this.tanksRemainingText = this.add.text(30, 65, 'Tanks Remaining:' + this.tanksRemaining, {
             fontSize: '30px',
         })
-        tanksRemainingText.setScrollFactor(0, 0)
-        tanksRemainingText.setDepth(5)
-        tanksRemainingText.setTint(0x39FF14)
+        this.tanksRemainingText.setScrollFactor(0, 0)
+        this.tanksRemainingText.setDepth(5)
+        this.tanksRemainingText.setTint(0x39FF14)
+    }
+
+    updateTanksRemainingUI(){
+        this.tanksRemainingText.setText('Tanks Remaining:' + this.tanksRemaining)
     }
 
     tankFuelUI(player) {
@@ -353,5 +363,14 @@ class TankScene extends Phaser.Scene {
         var tankRadar = this.add.image(700, 500, 'tankRadar')
         tankRadar.setScrollFactor(0, 0)
         tankRadar.setDepth(5)
+    }
+
+    gameOver() {
+        var gameOverText = this.add.text(180, 250, 'Game Over', {
+            fontSize: '90px'
+        })
+        gameOverText.setTint(0x39FF14)
+        gameOverText.setScrollFactor(0, 0)
+        gameOverText.setDepth(5)
     }
 }
