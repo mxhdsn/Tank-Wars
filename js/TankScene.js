@@ -17,7 +17,9 @@ class TankScene extends Phaser.Scene {
     tankSpeed = 0
     /** @type {number} */
     tanksRemaining = 0
-    
+    /** @type {number} */
+    playerHealth = 10
+
     preload() {
         this.load.image('bullet', 'assets/tanks/bullet.png')
         this.load.atlas('tank', 'assets/tanks/tanks.png', 'assets/tanks/tanks.json')
@@ -63,7 +65,7 @@ class TankScene extends Phaser.Scene {
         border.setDepth(5)
 
         //-- Tank Health --//
-        this.tankHealthUI()      
+        this.tankHealthUI()
 
         //-- Enemy Tanks Remaining --//
         this.tanksRemainingUI()
@@ -77,7 +79,7 @@ class TankScene extends Phaser.Scene {
         //-- Radar Scanning --//
         this.tankRadarUI()
 
-        
+
         // create bullets
         this.enemyBullets = this.physics.add.group({
             defaultKey: 'bullet',
@@ -129,6 +131,36 @@ class TankScene extends Phaser.Scene {
         this.player.update()
         for (let i = 0; i < this.enemyTanks.length; i++) {
             this.enemyTanks[i].update(time, delta)
+        }
+        if(this.playerHealth < 10){
+            this.life10.destroy(true)
+        }
+        if(this.playerHealth < 9){
+            this.life9.destroy(true)
+        }
+        if(this.playerHealth < 8){
+            this.life8.destroy(true)
+        }
+        if(this.playerHealth < 7){
+            this.life7.destroy(true)
+        }
+        if(this.playerHealth < 6){
+            this.life6.destroy(true)
+        }
+        if(this.playerHealth < 5){
+            this.life5.destroy(true)
+        }
+        if(this.playerHealth < 4){
+            this.life4.destroy(true)
+        }
+        if(this.playerHealth < 3){
+            this.life3.destroy(true)
+        }
+        if(this.playerHealth < 2){
+            this.life2.destroy(true)
+        }
+        if(this.playerHealth < 1){
+            this.life1.destroy(true)
         }
     }
 
@@ -188,6 +220,8 @@ class TankScene extends Phaser.Scene {
     bulletHitPlayer(hull, bullet) {
         this.disposeOfBullet(bullet)
         this.player.damage()
+        this.playerHealth -= 1
+        console.log(this.playerHealth)
         if (this.player.isDestroyed()) {
             this.input.enabled = false
             this.enemyTanks = []
@@ -256,17 +290,37 @@ class TankScene extends Phaser.Scene {
         this.explosions.killAndHide(gameObject)
     }
 
-    tankHealthUI(player){
-        var tankHealthText = this.add.text( 30, 30, 'Lives: ', {
+    tankHealthUI(player) {
+        var tankHealthText = this.add.text(30, 30, 'Lives: ', {
             fontSize: '30px',
         })
         tankHealthText.setScrollFactor(0, 0)
         tankHealthText.setDepth(5)
-        tankHealthText.setTint(0x39FF14) 
+        tankHealthText.setTint(0x39FF14)
+        this.life1 = this.add.image(160, 45, 'life')
+        this.life1.setScrollFactor(0, 0)
+        this.life2 = this.add.image(200, 45, 'life')
+        this.life2.setScrollFactor(0, 0)
+        this.life3 = this.add.image(240, 45, 'life')
+        this.life3.setScrollFactor(0, 0)
+        this.life4 = this.add.image(280, 45, 'life')
+        this.life4.setScrollFactor(0, 0)
+        this.life5 = this.add.image(320, 45, 'life')
+        this.life5.setScrollFactor(0, 0)
+        this.life6 = this.add.image(360, 45, 'life')
+        this.life6.setScrollFactor(0, 0)
+        this.life7 = this.add.image(400, 45, 'life')
+        this.life7.setScrollFactor(0, 0)
+        this.life8 = this.add.image(440, 45, 'life')
+        this.life8.setScrollFactor(0, 0)
+        this.life9 = this.add.image(480, 45, 'life')
+        this.life9.setScrollFactor(0, 0)
+        this.life10 = this.add.image(520, 45, 'life')
+        this.life10.setScrollFactor(0, 0)
     }
 
     tanksRemainingUI(enemy) {
-        var tanksRemainingText = this.add.text( 30, 65, 'Tanks Remaining:', {
+        var tanksRemainingText = this.add.text(30, 65, 'Tanks Remaining:', {
             fontSize: '30px',
         })
         tanksRemainingText.setScrollFactor(0, 0)
@@ -274,7 +328,7 @@ class TankScene extends Phaser.Scene {
         tanksRemainingText.setTint(0x39FF14)
     }
 
-    tankFuelUI(player){
+    tankFuelUI(player) {
         var tankFuel = this.add.text(30, 540, 'Fuel: ', {
             fontSize: '20px',
         })
@@ -286,7 +340,7 @@ class TankScene extends Phaser.Scene {
         this.tankFuel.setDepth(5)
     }
 
-    tankSpeedUI(player){
+    tankSpeedUI(player) {
         var tankSpeedText = this.add.text(30, 570, 'Tank Speed:' + this.tankSpeed, {
             fontSize: '20px'
         })
@@ -294,8 +348,8 @@ class TankScene extends Phaser.Scene {
         tankSpeedText.setDepth(5)
         tankSpeedText.setTint(0x39FF14)
     }
-    
-    tankRadarUI(){
+
+    tankRadarUI() {
         var tankRadar = this.add.image(700, 500, 'tankRadar')
         tankRadar.setScrollFactor(0, 0)
         tankRadar.setDepth(5)
