@@ -127,6 +127,7 @@ class TankScene extends Phaser.Scene {
         this.physics.add.overlap(this.player.hull, this.fuel, this.fuelCollected, null, this)
 
         //-- Tank Speed --//
+        this.tankSpeed = this.player.currentSpeed
         this.tankSpeedUI()
 
         //-- Radar Scanning --//
@@ -227,7 +228,6 @@ class TankScene extends Phaser.Scene {
         this.disposeOfBullet(bullet)
         this.player.damage()
         this.playerHealth -= 1
-        console.log(this.playerHealth)
         if (this.player.isDestroyed()) {
             this.input.enabled = false
             this.enemyTanks = []
@@ -355,20 +355,25 @@ class TankScene extends Phaser.Scene {
 
     createFuelCan(dataObject) {
         this.fuel = this.add.sprite(dataObject.x, dataObject.y, 'fuelCan')
+        this.fuel.setDepth(4)
     }
 
     fuelCollected(player, fuel) {
+        this.fuel.destroy()
         this.tankFuelAmount += 100
         console.log(this.tankFuelAmount)
     }
 
     tankSpeedUI(player) {
-        var tankSpeedText = this.add.text(30, 570, 'Tank Speed:' + this.tankSpeed, {
+        this.tankSpeedText = this.add.text(30, 570, 'Tank Speed:' + this.tankSpeed, {
             fontSize: '20px'
         })
-        tankSpeedText.setScrollFactor(0, 0)
-        tankSpeedText.setDepth(5)
-        tankSpeedText.setTint(0x39FF14)
+        this.tankSpeedText.setScrollFactor(0, 0)
+        this.tankSpeedText.setDepth(5)
+        this.tankSpeedText.setTint(0x39FF14)
+    }
+    updateTankSpeedUI(){
+        this.tankSpeedText.setText('Tank Speed:' + this.tankSpeed)
     }
 
     tankRadarUI() {
